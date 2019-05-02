@@ -1,0 +1,461 @@
+import java.util.Random;
+import javafx.scene.paint.Color;
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
+
+
+public class hangman extends Application
+
+{   
+	static VBox vbox;
+	static boolean playagain = false;
+	static StringBuilder check;
+	static double gamesWon = 0; //used to display the amount of total games the player has won.
+	static double gamesPlayed = 0; //used to show the amount of total game the player has played.
+	static boolean correctGuess;
+	static char a;
+	static String Hide;
+	static String wordArray[] = {"dank","supercali","hangman","words", "happy","hobbs","doctor"};
+	static Random word;
+	static int chosen; 
+	static String finalWord;
+	static BorderPane pane = new BorderPane();
+	static int count = 0;   
+    static double percentage;
+	static Button A = new Button("a");static Button B = new Button("b"); static Button C = new Button("c"); static Button D = new Button("d");
+    static Button E = new Button("e");static Button F = new Button("f");static Button G = new Button("g"); static Button H = new Button("h");
+    static Button I = new Button("i");static Button J = new Button("j");static Button K = new Button("k");static Button L = new Button("l");
+    static Button M = new Button("m");static Button N = new Button("n");static Button O = new Button("o");static Button P = new Button("p");
+    static Button Q = new Button("q");static Button R = new Button("r");static Button S = new Button("s");static Button T = new Button("t");
+	static Button U = new Button("u");static Button V = new Button("v");static Button W = new Button("w");static Button X = new Button("x");
+	static Button Y = new Button("y");static Button Z = new Button("z");Button qr = new Button("Play Again?");
+	
+	static Label winPercent;
+	HBox hbox = new HBox();
+	static HBox hbox1 = new HBox();
+	static VBox vbox2 = new VBox(15);
+	static Label showword;
+	static Label yoo;
+	static Label displaycount;
+	static Label gamesplayedcount;
+	static Line line1;
+	static Line line2;
+	static Line line3;
+	static Line line4;
+	static Line line5;
+	static Circle circle;
+	static Line leftLeg;
+	static Line rightArm;
+	static Line leftArm;
+	static Line rightLeg;
+	@Override
+    public void start(Stage primaryStage) throws Exception
+    { 
+		winPercent = new Label("Win Percentage is " + percentage);
+		gamesplayedcount = new Label("You have played " + gamesPlayed + " full games");
+		displaycount = new Label("You have " + count + " wrong guesses"); // displaycount is used to show the player how many wrong guess they have used
+		yoo = new Label(" "); // the yoo label is used in 
+		word = new Random(); //used a string to get a 
+		chosen = word.nextInt(wordArray.length); // will get a random value from the word array then cast it into an int called chosen
+		finalWord = wordArray[chosen]; //the chosen int is then used to indicate the position of the array that the word will be chosen from
+		hideWord(finalWord); //calls the hideword method
+		check = new StringBuilder(Hide); //sets check as a stringbuilder of hide
+		showword = new Label("The Word is " + check); //label to display what the word is on the vbox called vbox2
+		hbox1.setStyle("-fx-font: 18 arial;"); //Throughout the code the setStyle is used for font and size of texts in the hboxes and vboxes
+		vbox2.setStyle("-fx-font: 24 arial;");
+    	hbox1.setAlignment(Pos.CENTER); //aligned the hbox to the center 
+    	hbox1.getChildren().addAll(displaycount); //will set displaycount to hbox1 to show the player how many guesses they have left
+    	hbox.getChildren().addAll(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z, qr);   		
+    	vbox2.getChildren().addAll(showword, yoo); //applies the text from showword and the text from yoo onto the vbox 
+    	pane.setTop(hbox);   //sets hbox to the top pane in the BoarderPane	   	
+    	pane.setBottom(hbox1); //will set the bottom of the BoarderPane to whatever the contents are in hbox1
+    	pane.setLeft(vbox2); //will set the left pane to all of the contents that are in vbox2 
+    	pane.setRight(getVBox()); //will call getVBox method 
+    	Scene scene = new Scene(pane, 700, 500); //used to set the size of the BoarderPane in which everything is displayed on
+    	primaryStage.setTitle("Hangman GUI");  //sets the stage title to Hangman GUI
+    	primaryStage.setScene(scene); //sets the scene to the stage
+    	primaryStage.show(); //used to display everything on the scene
+    	
+    	/*all of the .setOnAction methods are used to make the button associated with it do whatever the code is in the buttonString method
+    	 * and if you are still reading at this point thank you for enjoying my code and we will get to the commenting on what the actions
+    	 * of the button String method :) 
+    	 */
+    	A.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});
+    	B.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});
+    	C.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});
+    	D.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});
+    	E.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});
+    	F.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});
+    	G.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});
+    	H.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});L.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});
+    	I.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});
+    	J.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});
+    	K.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});L.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});M.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});N.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});O.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});P.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});Q.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});R.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});S.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});T.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});U.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});V.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});W.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});X.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});Y.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});Z.setOnAction((ActionEvent e) ->
+		{
+			buttonString(e);
+		});
+		qr.setOnAction((ActionEvent b) ->
+		{
+			playAgain(b);
+			pane.getChildren().removeAll(line1,line2,line3,line4,line5,circle,leftLeg,rightLeg,rightArm,leftArm);
+		});
+    			
+  /*The LinePane method here is implemented to display a different form of the hangman for each wrong guess that is used. For one wrong guess
+   * just a single line will be shown in the center of a BorderPane. If the player guesses another wrong letter then the first line will be 
+   * shown as well as a vertical line connected to the center.  For the third wrong guess the first two lines will be shown as well and a
+   * horizontal line connected to the end and extending to the right.  If the player has four wrong guess all of the previous lines will show
+   * as well as one extended vertically downward from the ending point of the previous line. A fifth guess will result in all lines 
+   * shown before as well as a head to simulate a head of someone being hung.  A sixth wrong guess will generate a body to the figure. A 
+   * seventh wrong guess will give the player a right arm.  An eighth wrong guess will give the simulated hungman a left arm. If the user is
+   * still guessing wrong at this point the game is not looking in their favor and it appears that they are going to die. The ninth wrong guess
+   * will generate a wrong leg. If the player guesses wrong a tenth time the final piece of the man, the left leg, will be shown and the player
+   * is now formally known as a "loser".  
+   */
+
+    }
+	public static void linePainman() {
+
+	if (count == 1) 
+	{
+	line1 = new Line(0,450,250,450);
+	line1.setStrokeWidth(5);
+	line1.setStroke(Color.GREEN);
+	pane.getChildren().add(line1);
+	}
+	if (count == 2)
+	{	
+	
+	line2 = new Line(125,450,125,150);
+	line2.setStrokeWidth(5);
+	line2.setStroke(Color.GREEN);
+	pane.getChildren().addAll(line2);
+	}
+	if (count == 3)
+	{
+	
+    line3 = new Line(125,150,200,150);
+    line3.setStrokeWidth(5);
+    line3.setStroke(Color.GREEN);        
+    pane.getChildren().addAll(line3);
+	}
+	if (count == 4)
+	{
+	
+    line4 = new Line(200,150,200,200);
+    line4.setStrokeWidth(5);
+    line4.setStroke(Color.GREEN);           
+    pane.getChildren().addAll(line4);
+	}
+    if (count == 5)
+    {
+    	
+    	circle = new Circle(200,215,25);
+    	circle.setStroke(Color.GREEN);
+    	pane.getChildren().addAll(circle);       	
+    }
+    if (count == 6)
+    {
+    	
+    	line5 = new Line(200,242,200,310);
+    	line5.setStrokeWidth(5);
+        line5.setStroke(Color.RED);       	
+    	pane.getChildren().addAll(line5);       	
+    }
+    if (count == 7)
+    {
+    	
+    	rightArm = new Line(200,280,250,250);
+    	rightArm.setStroke(Color.RED);
+    	rightArm.setStrokeWidth(5);
+        pane.getChildren().addAll(rightArm);
+    }
+    if (count == 8)
+    {
+    	
+        leftArm = new Line(200,280,150,250);
+        leftArm.setStroke(Color.RED);
+        leftArm.setStrokeWidth(5);
+    	pane.getChildren().addAll(leftArm);
+    }
+    if (count == 9)
+    {
+    
+    	rightLeg = new Line(200,310,250,360);
+    	rightLeg.setStrokeWidth(5);
+    	rightLeg.setStroke(Color.RED);        	
+        pane.getChildren().addAll(rightLeg);
+    }
+    if (count == 10)
+    {
+       	
+        leftLeg = new Line(200,310,150,360);
+        leftLeg.setStrokeWidth(5);
+        leftLeg.setStroke(Color.RED);
+    	pane.getChildren().addAll(leftLeg);
+    	
+    	if (playagain == true && count == 0)
+    	{
+
+    	    playagain = false;
+    	}
+
+    }
+    
+    
+    
+	}
+	  
+    public static void main(String[] args) 
+    
+    {
+
+        launch(args);
+
+    }
+    /* The hideWord method is used here to grab the word that we pulled at random and then replace every character in it with an "*".
+     * then  return the hidden word which is the displayed in a HBox on the left in the BorderPane.
+     */
+    public static String hideWord(String finalWord)  
+    {
+    	Hide = "";
+    	for (int a = 0; a < finalWord.length(); a ++)
+    	{
+    		Hide += "*";  		
+    	}
+    	return Hide;
+    }
+ 
+    /* The getVBox method here is used to display all of the information present in the left side of the BorderPane. In this vbox 
+     * the setPadding method is utilized to set the spacing between each the labels.  the setStyle is used to set the font size and font
+     * type of each of the labels. The getChilden is the used to actually display them onto the left section of the BorderPane
+     */
+    private VBox getVBox()
+    {
+    	VBox vbox = new VBox(15);
+    	vbox.setPadding(new Insets(15,5,5,5));
+    	Label[] courses = {gamesplayedcount , winPercent};
+    	//vbox.getText();
+    	vbox.setStyle("-fx-font: 24 arial;");
+    	vbox.getChildren().addAll(courses);
+		
+    	return vbox;	
+
+    }
+    /*getWin method is used to determine the games won per games played and is then displayed to the boarderpane
+     * 
+     */
+    
+    private static void getWin()
+    {
+    
+    {
+    	if (gamesPlayed == 0)
+    	{
+    	   percentage = 0.0;
+    	}
+    	else if (gamesPlayed > 0)
+    	{
+    		percentage = (gamesWon / gamesPlayed);
+    	}
+    
+    }	
+    }
+    /*The buttonString method is the meet and potatoes of the whole code pretty much. This method from the button that was pressed on the GUI
+     * a dummy variable gre is set equal to e.getSouce so it will set gre to whatever button called upon it. next a dummy variable called 
+     * a is set equal to the string value that is associated with the button that was fired.  a boolean value is then initiated for purposes
+     * to exit the for loop.  the for loop is then called upon to be able to check through the word that was selected from the array and see if
+     * the letter from the button is in the word. if it is found in the word it will then replace it with the character and print out the new word
+     * and set the color of the button to green to show that it was correct. If the letter is not in the word the guess count will increase, the
+     * button will turn red and the button will also be disabled and the hangman will displaced based upon the current vlaue of the count variable. 
+     * Then the method will see if the game is won.
+     */
+    public void buttonString(ActionEvent e)
+    {
+    	{
+        	Button gre = ((Button) e.getSource());
+        	char a = (gre.getText().charAt(0));
+        	boolean isFound = false;        	        	
+        	for (int i = 0; i < check.length(); i++)
+        	 {
+        		if (finalWord.charAt(i) == a)
+        		{
+        			 check.replace(i, i+1 , gre.getText());
+        			 isFound = true;
+        		}
+        	 }
+        		if  (isFound)
+        		{        			
+        			showword.setText("The Word is " + check);
+        			gre.setStyle("-fx-background-color: #80FF00 ");
+        		}	
+        			
+        		
+        		else
+        		{		      			
+        			//System.out.println("wrong button dummy");
+        			count ++;
+        			displaycount.setText("You have " + count + " wrong guesses");
+        			linePainman();
+        			gre.setDisable(true);
+        			gre.setStyle("-fx-background-color: #FF0000 ");
+        	    
+        		}
+        		gameWon();
+        		
+        		
+        }
+    }
+    /*The gameWon method is used to compare the word that is displayed with the word that was selected from the array. if they are equal before
+     * the player gets 10 incorrect guess then the player has won the game and a string will be displayed on the screen.  If the player gets 10
+     * guesses then the player has lost and the string will be displayed.
+     * 
+    */
+    public static void gameWon()
+    {
+    	
+    	if ((check.toString()).equals(finalWord)) 
+    			{
+    		        yoo.setText("YOU WON, I truly can't believe it..");
+    		        A.setDisable(true);B.setDisable(true);C.setDisable(true);D.setDisable(true);E.setDisable(true);F.setDisable(true);G.setDisable(true);
+    	    		H.setDisable(true);I.setDisable(true);J.setDisable(true);K.setDisable(true);L.setDisable(true);M.setDisable(true);N.setDisable(true);
+    	    		O.setDisable(true);P.setDisable(true);Q.setDisable(true);R.setDisable(true);S.setDisable(true);T.setDisable(true);U.setDisable(true);
+    	    		V.setDisable(true);W.setDisable(true);X.setDisable(true);Y.setDisable(true);Z.setDisable(true);
+                 gamesWon++;    			
+    			}
+    	if (count == 10)
+    	{
+    		yoo.setText("You Lost Loser");
+    		A.setDisable(true);B.setDisable(true);C.setDisable(true);D.setDisable(true);E.setDisable(true);F.setDisable(true);G.setDisable(true);
+    		H.setDisable(true);I.setDisable(true);J.setDisable(true);K.setDisable(true);L.setDisable(true);M.setDisable(true);N.setDisable(true);
+    		O.setDisable(true);P.setDisable(true);Q.setDisable(true);R.setDisable(true);S.setDisable(true);T.setDisable(true);U.setDisable(true);
+    		V.setDisable(true);W.setDisable(true);X.setDisable(true);Y.setDisable(true);Z.setDisable(true);
+    	}
+    	
+    }
+    public void playAgain(ActionEvent b)
+    		{
+    	        
+    	        gamesPlayed++;
+    	        getWin();
+    	        gamesplayedcount.setText("You have played " + gamesPlayed + " full games");
+    	        winPercent.setText("Win Percentage is " + percentage);
+    		    playagain = true;
+    	        count = 0;
+    	        linePainman();
+    	        displaycount.setText("You have " + count + " wrong guesses"); // displaycount is used to show the player how many wrong guess they have used
+    	  		yoo.setText(" "); // the yoo label is used in 
+    	  		chosen = word.nextInt(wordArray.length); // will get a random value from the word array then cast it into an int called chosen
+    	  		finalWord = wordArray[chosen]; //the chosen int is then used to indicate the position of the array that the word will be chosen from
+    	  		hideWord(finalWord); //calls the hideword method
+    	  		check = new StringBuilder(Hide); //sets check as a stringbuilder of hide
+    	  		showword.setText("The Word is " + check);
+    	        A.setDisable(false);B.setDisable(false);C.setDisable(false);D.setDisable(false);E.setDisable(false);F.setDisable(false);G.setDisable(false);
+  	    		H.setDisable(false);I.setDisable(false);J.setDisable(false);K.setDisable(false);L.setDisable(false);M.setDisable(false);N.setDisable(false);
+  	    		O.setDisable(false);P.setDisable(false);Q.setDisable(false);R.setDisable(false);S.setDisable(false);T.setDisable(false);U.setDisable(false);
+  	    		V.setDisable(false);W.setDisable(false);X.setDisable(false);Y.setDisable(false);Z.setDisable(false);
+  	    		A.setStyle("-fx-background-color: #EEEEEE");B.setStyle("-fx-background-color: #EEEEEE");C.setStyle("-fx-background-color: #EEEEEE");D.setStyle("-fx-background-color: #EEEEEE");
+  	    		E.setStyle("-fx-background-color: #EEEEEE");F.setStyle("-fx-background-color: #EEEEEE");G.setStyle("-fx-background-color: #EEEEEE");H.setStyle("-fx-background-color: #EEEEEE");
+  	    		I.setStyle("-fx-background-color: #EEEEEE");J.setStyle("-fx-background-color: #EEEEEE");K.setStyle("-fx-background-color: #EEEEEE");L.setStyle("-fx-background-color: #EEEEEE");
+  	    		M.setStyle("-fx-background-color: #EEEEEE");N.setStyle("-fx-background-color: #EEEEEE");O.setStyle("-fx-background-color: #EEEEEE");P.setStyle("-fx-background-color: #EEEEEE");
+  	    		Q.setStyle("-fx-background-color: #EEEEEE");R.setStyle("-fx-background-color: #EEEEEE");S.setStyle("-fx-background-color: #EEEEEE");T.setStyle("-fx-background-color: #EEEEEE");
+  	    		U.setStyle("-fx-background-color: #EEEEEE");V.setStyle("-fx-background-color: #EEEEEE");W.setStyle("-fx-background-color: #EEEEEE");X.setStyle("-fx-background-color: #EEEEEE");
+  	    		Y.setStyle("-fx-background-color: #EEEEEE");Z.setStyle("-fx-background-color: #EEEEEE");
+    		    
+    		
+    		}
+
+    
+    
+}
